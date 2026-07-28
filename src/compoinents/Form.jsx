@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-const Form = ({setUsers, setToggle, editUser}) => {
+const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditIndex}) => {
 
   let {register, handleSubmit, reset, formState:{errors}} = useForm({
     mode: "onChange",
@@ -12,10 +12,20 @@ const Form = ({setUsers, setToggle, editUser}) => {
       <h1 className='text-xl font-bold'>Create User</h1>
       <form onSubmit={handleSubmit((data) => {
         console.log(data);
-        setUsers((prev) => [...prev,data]);
+        if(editIndex !== null) {
+          setUsers((prev) => 
+          prev.map((user, index) =>
+          index === editIndex ? data:user
+        )
+      );
+        }else {
+          setUsers((prev) => [...prev,data]);
+        }
         reset();
+        setEdituser({});
+        setEditIndex(null);
         setToggle((prev) => !prev );
-      })} className='w-80 flex flex-col gap-3 p-4 rounded border-2 border-white bg-black'>
+      })} className='w-80 flex flex-col gap-3 p-6 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl'>
         <input
         defaultValue={editUser.name}
           {...register("name", {
@@ -25,7 +35,7 @@ const Form = ({setUsers, setToggle, editUser}) => {
               message: "Blank spaces are not allowed !"
             }
           })}
-         className='p-2 rounded-xl outline-0 border border-white' type='text' placeholder='Name' />
+         className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition' type='text' placeholder='Name' />
           {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         <input
         defaultValue={editUser.email}
@@ -36,7 +46,7 @@ const Form = ({setUsers, setToggle, editUser}) => {
               message: " Please enter the valid email !"
             }
           })}
-         className='p-2 rounded-xl outline-0 border border-white' type='email' placeholder='Email' />
+         className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition' type='email' placeholder='Email' />
           {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
         <input
         defaultValue={editUser.Mobile}
@@ -51,16 +61,17 @@ const Form = ({setUsers, setToggle, editUser}) => {
               message: "Maximum 10 digits !",
             },
           })}
-         className='p-2 rounded-xl outline-0 border border-white' type='number' placeholder='Mobile Number' />
+         className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition ' type='number' placeholder='Mobile Number' />
          {errors.Mobile && <p className='text-red-500'>{errors.Mobile.message}</p>}
         <input
         defaultValue={editUser.image}
           {...register("image", {
             required:"Image is Required !",
           })}
-         className='p-2 rounded-xl outline-0 border border-white' type='url' placeholder='Image' />
+         className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition' type='url' placeholder='Image' />
           {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
-        <button className='text-white bg-amber-600 p-2 rounded-xl cursor-pointer'>Add User</button>
+
+        <button className='mt-2 p-3 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 text-white font-semibold shadow-lg shadow-yellow-500/40 transition-all'>Add User</button>
       </form>
     </div>
   )

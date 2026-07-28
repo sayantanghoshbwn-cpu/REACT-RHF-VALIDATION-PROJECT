@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = ({setToggle}) => {
   return (
-    <div className='p-4 flex items-center justify-between bg-black rounded-xl'>
+    <div className='p-4 flex items-center justify-between bg-white/10 rounded-2xl backdrop-blur-xl border border-white/10 shadow-2xl'>
       <div>
         <img className='h-12 w-12 rounded-full object-cover'
         width = {35} 
@@ -13,7 +13,10 @@ const Navbar = ({setToggle}) => {
         <p>About</p>
         <p>Contact Us</p>
       </div>
-      <button onClick={() => setToggle((prev) => !prev)} className='p-2 bg-green-600 text-white rounded-xl cursor=pointer'>Create User</button>
+      <button onClick={() => setToggle((prev) => !prev)} className='px-6 py-3 rounded-xl
+      bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-white font-semibold shadow-lg
+      shadow-cyan-500/40 hover:to-blue-500 hover:shadow-cyan-400/70 hover:scale-105 transition-all
+      duration-300 cursor=pointer'>Create User</button>
     </div>
   )
 }
