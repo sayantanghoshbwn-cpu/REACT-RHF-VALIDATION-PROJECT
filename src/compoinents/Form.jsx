@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditIndex}) => {
@@ -7,6 +7,10 @@ const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditInd
     mode: "onChange",
   });
 
+  useEffect(() => {
+    reset(editUser);
+  }, [editUser, reset]);
+  
   return (
     <div className='flex flex-col gap-3 items-center'>
       <h1 className='text-xl font-bold'>Create User</h1>
@@ -22,12 +26,11 @@ const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditInd
           setUsers((prev) => [...prev,data]);
         }
         reset();
-        setEdituser({});
+        setEditUser({});
         setEditIndex(null);
         setToggle((prev) => !prev );
       })} className='w-80 flex flex-col gap-3 p-6 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl'>
         <input
-        defaultValue={editUser.name}
           {...register("name", {
             required: "Name is Required !",
             pattern: {
@@ -38,7 +41,6 @@ const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditInd
          className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition' type='text' placeholder='Name' />
           {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         <input
-        defaultValue={editUser.email}
           {...register("email", {
             required: "Email is Required !",
             pattern: {
@@ -49,7 +51,6 @@ const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditInd
          className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition' type='email' placeholder='Email' />
           {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
         <input
-        defaultValue={editUser.Mobile}
           {...register("Mobile", {
             required:"Mobile number is required !",
             minLength: {
@@ -64,7 +65,6 @@ const Form = ({setUsers, setToggle, editUser, editIndex, setEditUser, setEditInd
          className='p-3 rounded-xl outline-none border border-white/30 bg-white/10 text-white placeholder:text-gray-300 focus:border-cyan-400/30 transition ' type='number' placeholder='Mobile Number' />
          {errors.Mobile && <p className='text-red-500'>{errors.Mobile.message}</p>}
         <input
-        defaultValue={editUser.image}
           {...register("image", {
             required:"Image is Required !",
           })}
